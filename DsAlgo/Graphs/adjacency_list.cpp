@@ -10,6 +10,17 @@ Graph::Graph(int vertices, int edges, bool directed)
   }
 }
 
+bool Graph::addEdge(int vertex1, int vertex2) {
+  if (vertex1 >= vertices_ || vertex2 >= vertices_) {
+    return false;
+  }
+  adj_list_[vertex1].push_back(vertex2);
+  if (!is_directed_) {
+    adj_list_[vertex2].push_back(vertex1);
+  }
+  return true;
+}
+
 void Graph::populate() {
   int u, v;
   std::cout << "Enter " << edges_ << " edges:\n";
@@ -90,6 +101,39 @@ void Graph::bfsUtil(int vertex, std::vector<bool> &visited) const {
       }
     }
   }
+}
+
+bool Graph::hasCycle() const {
+  for (int i = 0; i < vertices_; ++i) {
+    if (hasCycleUtil(i)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+bool Graph::hasCycleUtil(int vertex) const {
+  std::queue<int> bfs_queue;
+  std::vector<bool> visited(vertices_, false);
+  visited[vertex] = true;
+  bfs_queue.push(vertex);
+
+  int current;
+  while (!bfs_queue.empty()) {
+    current = bfs_queue.front();
+    bfs_queue.pop();
+    for (const auto &adj : adj_list_[current]) {
+      if (!visited[adj]) {
+        visited[adj] = true;
+        bfs_queue.push(adj);
+      } else {
+        if (adj == vertex) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
 }
 
 } // namespace AdjacencyList
