@@ -38,7 +38,7 @@ int main() {
 
   // If no launch policy is specified in async call, it depends on the compiler
   // whether or not it will create a new thread or not. To force the async to
-  // execute task asyncronously (in a separate thread), then use async launch
+  // execute task asyncronously (in a separate thread), use async launch
   // policy explicitly. In case we specify async launch policy and thread can't
   // be created with it, std::system_error exception is thrown.
 
