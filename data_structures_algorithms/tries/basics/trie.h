@@ -22,6 +22,8 @@ public:
   void insert(const std::string &word);
   bool search(const std::string &word) const;
   bool startsWith(const std::string &prefix) const;
+  // a string is complete if all prefixes of that string are present in the trie
+  bool isCompleteString(const std::string &str) const;
 
 private:
   Node *root;

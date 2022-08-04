@@ -52,3 +52,17 @@ bool Trie::startsWith(const std::string &prefix) const {
   }
   return true;
 }
+
+bool Trie::isCompleteString(const std::string &str) const {
+  Node *itr = root;
+  for (int i = 0; i < str.length(); ++i) {
+    if (!itr->containsKey(str[i])) {
+      return false;
+    }
+    itr = itr->getReferenceNode(str[i]);
+    if (!itr->wordEnded()) {
+      return false;
+    }
+  }
+  return true;
+}
